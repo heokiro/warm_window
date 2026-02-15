@@ -1,15 +1,36 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import FeedbackForm from './components/FeedbackForm';
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(180deg, #fdf6f0 0%, #f8e8e0 50%, #e8f5e9 100%);
   position: relative;
   overflow-x: hidden;
 `;
 
-// 크리스마스 장식용 별들
-const StarsContainer = styled.div`
+// 벚꽃잎 떨어지는 애니메이션
+const fall = keyframes`
+  0% {
+    transform: translateY(-10px) rotate(0deg) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg) translateX(50px);
+    opacity: 0.3;
+  }
+`;
+
+const sway = keyframes`
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+`;
+
+// 벚꽃잎 컨테이너
+const PetalsContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -17,23 +38,23 @@ const StarsContainer = styled.div`
   height: 100%;
   pointer-events: none;
   z-index: 0;
+  overflow: hidden;
 `;
 
-const Star = styled.div`
+const Petal = styled.div`
   position: absolute;
-  width: ${props => props.size || 2}px;
-  height: ${props => props.size || 2}px;
-  background: #fff;
-  border-radius: 50%;
+  width: ${props => props.size || 10}px;
+  height: ${props => props.size * 0.6 || 6}px;
+  background: ${props => props.color || '#ffb7c5'};
+  border-radius: 50% 0 50% 50%;
   top: ${props => props.top}%;
   left: ${props => props.left}%;
-  animation: twinkle ${props => props.duration || 3}s infinite;
-  opacity: ${props => props.opacity || 0.7};
-
-  @keyframes twinkle {
-    0%, 100% { opacity: ${props => props.opacity || 0.7}; }
-    50% { opacity: 1; }
-  }
+  animation:
+    ${fall} ${props => props.duration || 10}s linear infinite,
+    ${sway} ${props => props.swayDuration || 3}s ease-in-out infinite;
+  animation-delay: ${props => props.delay || 0}s;
+  opacity: ${props => props.opacity || 0.8};
+  transform: rotate(${props => props.rotate || 0}deg);
 `;
 
 const ContentWrapper = styled.div`
@@ -52,13 +73,13 @@ const Header = styled.header`
 
 const Title = styled.h1`
   font-size: 3rem;
-  color: #fff;
+  color: #5d4e37;
   margin-bottom: 0rem;
   font-weight: 400;
   letter-spacing: 3px;
-  text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  text-shadow: 0 0 20px rgba(255, 183, 197, 0.6);
   font-family: 'Italiana', serif;
-  
+
   @media (max-width: 480px) {
     font-size: 2.7rem;
     letter-spacing: 2px;
@@ -67,23 +88,23 @@ const Title = styled.h1`
 
 const Subtitle = styled.p`
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(93, 78, 55, 0.7);
   letter-spacing: 1px;
 `;
 
 const ExhibitionSection = styled.section`
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.2rem 1.5rem;
   margin-bottom: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(139, 195, 74, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.3rem;
-  color: #ff6b6b;
+  color: #8bc34a;
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 500;
@@ -91,19 +112,19 @@ const SectionTitle = styled.h2`
 `;
 
 const Description = styled.div`
-  color: rgba(255, 255, 255, 0.9);
+  color: #5d4e37;
   line-height: 2;
   font-size: 0.95rem;
   text-align: justify;
-  
+
   p {
     margin-bottom: 1.2rem;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   @media (max-width: 480px) {
     font-size: 0.9rem;
     line-height: 1.8;
@@ -114,11 +135,11 @@ const CreditsSection = styled.footer`
   margin-top: 4rem;
   padding: 2rem 1.5rem;
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(93, 78, 55, 0.8);
   font-size: 0.85rem;
   line-height: 2;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  
+  border-top: 1px solid rgba(139, 195, 74, 0.3);
+
   @media (max-width: 480px) {
     font-size: 0.8rem;
     padding: 1.5rem 1rem;
@@ -128,55 +149,64 @@ const CreditsSection = styled.footer`
 
 const CreditItem = styled.div`
   margin-bottom: 0.8rem;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
 `;
 
 const CreditLabel = styled.span`
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(93, 78, 55, 0.9);
   font-weight: 500;
 `;
 
 const CreditValue = styled.span`
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(93, 78, 55, 0.7);
   margin-left: 0.5rem;
 `;
 
-// 별 생성 함수
-const generateStars = (count) => {
+// 벚꽃잎 생성 함수
+const generatePetals = (count) => {
+  const colors = ['#ffb7c5', '#ffc0cb', '#ffccd5', '#ffe5ec'];
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    top: Math.random() * 100,
+    top: Math.random() * -20,
     left: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    duration: Math.random() * 3 + 2,
-    opacity: Math.random() * 0.5 + 0.3,
+    size: Math.random() * 8 + 6,
+    duration: Math.random() * 8 + 8,
+    swayDuration: Math.random() * 2 + 2,
+    delay: Math.random() * 10,
+    opacity: Math.random() * 0.4 + 0.5,
+    rotate: Math.random() * 360,
+    color: colors[Math.floor(Math.random() * colors.length)],
   }));
 };
 
 function App() {
-  const stars = generateStars(50);
+  const petals = generatePetals(30);
 
   return (
     <AppContainer>
-      <StarsContainer>
-        {stars.map(star => (
-          <Star
-            key={star.id}
-            top={star.top}
-            left={star.left}
-            size={star.size}
-            duration={star.duration}
-            opacity={star.opacity}
+      <PetalsContainer>
+        {petals.map(petal => (
+          <Petal
+            key={petal.id}
+            top={petal.top}
+            left={petal.left}
+            size={petal.size}
+            duration={petal.duration}
+            swayDuration={petal.swayDuration}
+            delay={petal.delay}
+            opacity={petal.opacity}
+            rotate={petal.rotate}
+            color={petal.color}
           />
         ))}
-      </StarsContainer>
-      
+      </PetalsContainer>
+
       <ContentWrapper>
         <Header>
-          <Title>Warm Window</Title>
+          <Title>입춘(立春)</Title>
         </Header>
 
         <FeedbackForm />
@@ -184,17 +214,21 @@ function App() {
         <ExhibitionSection>
           <Description>
             <p>
-              Warm Window는 차가운 겨울길 위에서 잠시 멈춰 선 이들에게 작은 온기를 건네는 설치 작품입니다.
+              겨울의 시간은 종종, 끝없는 추위가 계속될 것처럼 보입니다.
+              그래서 우리는 쉽게 조급해지고, 스스로를 더 단단히 움켜쥐게 됩니다.
             </p>
             <p>
-              겨울의 거리는 차갑고, 우리는 점점 시야를 좁힌 채 목적지만을 향해 빠르게 걸어갑니다.
-              하지만 잠시 걸음을 멈추고 주변을 돌아보는 순간, 예상치 못한 작은 선물이 당신을 위해 준비되어 있습니다.
+              입춘(立春)은 봄이 완전히 시작된 날이 아니라,
+              아직 차가운 공기 속에서도 계절의 방향이 이미 바뀌었음을 알리는 순간입니다.
+              당장은 달라진 게 없이 보여도, 시간은 더 이상 겨울에만 머물러 있지 않습니다.
             </p>
             <p>
-              불 꺼진 장난감 가게를 떠올리게 하는 어두운 공간 속 크리스마스 오브제들은 관람객의 움직임에 반응해 하나씩 빛을 밝히며, 방치된 공간에 서서히 온기를 채워 넣습니다.
+              전시장 중앙에는 꽉 움켜쥔 손 조각이 놓여 있습니다.
+              단단하게 쥔 그 손은 지난 겨울을 어떻게 버텨왔는지 말해줍니다.
             </p>
             <p>
-              당신이 만들어 낸 쇼윈도우 속 따뜻한 크리스마스 장면이, 이 거리를 걷는 사람들의 마음에도 작은 온기와 위로를 전해 주길 바랍니다.
+              우리의 온기를 건네는 순간, 화면 속 시간도 서서히 움직이기 시작합니다.
+              얼어붙은 눈 아래 숨어 있던 것들이 드러나고, 천천히 봄으로 물들어갑니다.
             </p>
           </Description>
         </ExhibitionSection>
@@ -202,19 +236,19 @@ function App() {
         <CreditsSection>
           <CreditItem>
             <CreditLabel>참여작가</CreditLabel>
-            <CreditValue>최재호 / 허재혁</CreditValue>
+            <CreditValue>D.cus(최재호, 허재혁), 이건웅</CreditValue>
           </CreditItem>
           <CreditItem>
-            <CreditLabel>소품 연출 및 디자인</CreditLabel>
+            <CreditLabel>포스터</CreditLabel>
             <CreditValue>김윤희</CreditValue>
           </CreditItem>
           <CreditItem>
-            <CreditLabel>장소제공</CreditLabel>
-            <CreditValue>갤러리 잔느</CreditValue>
+            <CreditLabel>조형 모델</CreditLabel>
+            <CreditValue>오주영</CreditValue>
           </CreditItem>
           <CreditItem>
-            <CreditLabel>현장 설치 및 프로그램 테스트</CreditLabel>
-            <CreditValue>오주영</CreditValue>
+            <CreditLabel>장소협찬</CreditLabel>
+            <CreditValue>갤러리 잔느</CreditValue>
           </CreditItem>
         </CreditsSection>
       </ContentWrapper>

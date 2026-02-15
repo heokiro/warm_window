@@ -12,7 +12,7 @@ const FormContainer = styled.div`
 
 const FormTitle = styled.h2`
   font-size: 1.5rem;
-  color: #fff;
+  color: #5d4e37;
   margin-bottom: 1rem;
   text-align: center;
   font-weight: 500;
@@ -20,7 +20,7 @@ const FormTitle = styled.h2`
 
 const FormDescription = styled.p`
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(93, 78, 55, 0.9);
   margin-bottom: 1.5rem;
   text-align: center;
   line-height: 1.6;
@@ -37,10 +37,10 @@ const TextArea = styled.textarea`
   box-sizing: border-box;
   min-height: 150px;
   padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(139, 195, 74, 0.4);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  color: #5d4e37;
   font-size: 1rem;
   font-family: inherit;
   resize: vertical;
@@ -48,45 +48,45 @@ const TextArea = styled.textarea`
   transition: all 0.3s ease;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(93, 78, 55, 0.5);
   }
 
   &:focus {
     outline: none;
-    border-color: #ff6b6b;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+    border-color: #8bc34a;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 20px rgba(139, 195, 74, 0.3);
   }
 `;
 
 const SubmitButton = styled.button`
   padding: 0.9rem 2rem;
-  background: rgba(76, 175, 80, 0.25);
-  color: #fff;
-  border: 2px solid rgba(76, 175, 80, 0.5);
+  background: rgba(255, 183, 197, 0.4);
+  color: #5d4e37;
+  border: 2px solid rgba(255, 183, 197, 0.6);
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(76, 175, 80, 0.25);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 183, 197, 0.25);
 
   &:hover {
-    background: rgba(76, 175, 80, 0.35);
-    border-color: rgba(76, 175, 80, 0.7);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 30px rgba(76, 175, 80, 0.35);
+    background: rgba(255, 183, 197, 0.6);
+    border-color: rgba(255, 183, 197, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15), 0 0 30px rgba(255, 183, 197, 0.35);
   }
 
   &:active {
-    background: rgba(76, 175, 80, 0.3);
+    background: rgba(255, 183, 197, 0.5);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: rgba(76, 175, 80, 0.1);
-    border-color: rgba(76, 175, 80, 0.3);
+    background: rgba(255, 183, 197, 0.2);
+    border-color: rgba(255, 183, 197, 0.4);
   }
 `;
 
@@ -96,12 +96,12 @@ const Message = styled.div`
   text-align: center;
   font-size: 0.95rem;
   margin-top: 1rem;
-  background: ${props => props.success 
-    ? 'rgba(76, 175, 80, 0.2)' 
+  background: ${props => props.success
+    ? 'rgba(139, 195, 74, 0.2)'
     : 'rgba(244, 67, 54, 0.2)'};
-  color: ${props => props.success ? '#c8e6c9' : '#ffcdd2'};
-  border: 1px solid ${props => props.success 
-    ? 'rgba(76, 175, 80, 0.5)' 
+  color: ${props => props.success ? '#558b2f' : '#c62828'};
+  border: 1px solid ${props => props.success
+    ? 'rgba(139, 195, 74, 0.5)'
     : 'rgba(244, 67, 54, 0.5)'};
 `;
 
@@ -112,7 +112,7 @@ function FeedbackForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!feedback.trim()) {
       setMessage({ type: 'error', text: '피드백을 입력해주세요.' });
       return;
@@ -139,7 +139,7 @@ function FeedbackForm() {
 
       setFeedback('');
       setMessage({ type: 'success', text: '피드백이 성공적으로 전송되었습니다. 감사합니다!' });
-      
+
       // 3초 후 메시지 제거
       setTimeout(() => {
         setMessage(null);
@@ -179,4 +179,3 @@ function FeedbackForm() {
 }
 
 export default FeedbackForm;
-
